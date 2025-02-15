@@ -14,6 +14,20 @@ PLAYER_VEL = 5
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
+#bg music
+pygame.mixer.music.load(join("assets", "sound", "bg.mp3"))
+pygame.mixer.music.set_volume(0.2)  # Set volume to 20%
+pygame.mixer.music.play(-1)
+# Load game over sound
+game_over_sound = pygame.mixer.Sound(join("assets", "sound", "gameover.mp3"))
+# load next level sound
+next_level_sound = pygame.mixer.Sound(join("assets", "sound", "nextlevel.mp3"))
+#collect fruit sound
+collect_fruit_sound = pygame.mixer.Sound(join("assets", "sound", "collect.mp3"))
+# Load hit sound
+hit_sound = pygame.mixer.Sound(join("assets", "sound", "hit.mp3"))
+# Load jump sound
+jump_sound = pygame.mixer.Sound(join("assets", "sound", "jump.mp3"))
 
 def flip(sprites):
     return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
@@ -84,6 +98,7 @@ class Player(pygame.sprite.Sprite):
         self.y_vel = -self.GRAVITY * 8
         self.animation_count = 0
         self.jump_count += 1
+        jump_sound.play() 
         if self.jump_count == 1:
             self.fall_count = 0
 
@@ -444,6 +459,7 @@ def handle_move(player, objects):
                 "fan": 10
             }.get(obj.name, 20)
             player.take_damage(damage)
+            hit_sound.play()
             break
     
     if not touching_hazard:
@@ -457,6 +473,7 @@ def handle_move(player, objects):
             if player_rect.colliderect(obj.rect):
                 obj.collect()
                 player.score += 10
+                collect_fruit_sound.play()
 
     # Remove completed fruit animations
     for obj in objects:
@@ -608,7 +625,9 @@ def main(window):
                 if player.rect.top > HEIGHT and player.rect.right >= objects[-1].rect.left:
                     show_game_complete(window)
                 else:
+                    game_over_sound.play()  
                     show_death_screen(window)
+                    
                 run = False
                 break
 
@@ -749,6 +768,7 @@ def show_level_complete(window):
     text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     window.blit(text, text_rect)
     pygame.display.update()
+    next_level_sound.play()
     pygame.time.delay(2000)
 
 def show_death_screen(window):
