@@ -10,7 +10,7 @@ This is a platformer game where the player can jump, collect fruits, and avoid h
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/your-repo-name.git
+    git clone [https://github.com/kritesh00/CG-Platform-Game.git](https://github.com/kritesh00/CG-Platform-Game.git)
     cd your-repo-name
     ```
 
