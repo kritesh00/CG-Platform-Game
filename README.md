@@ -35,6 +35,3 @@ This is a platformer game where the player can jump, collect fruits, and avoid h
 - Various hazards to avoid
 - Background music and sound effects
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request.
